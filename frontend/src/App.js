@@ -13,7 +13,10 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import SearchResults from './pages/SearchResults';
 import PublicGalleriesPage from './pages/PublicGalleriesPage'; // Added for public galleries page
-import PublicVideosPage from './pages/PublicVideosPage'; // Added for public videos page
+import PublicVideosPage from './pages/PublicVideosPage'; 
+import Terms from "./pages/Terms";
+import Privacy from "./pages/Privacy";
+
 
 // Admin Pages
 import AdminDashboard from './admin/AdminDashboard';
@@ -33,6 +36,7 @@ import VideosList from './admin/pages/VideosList';
 import ProtectedRoute from './components/ProtectedRoute';
 
 import './App.css';
+import AboutPage from './pages/AboutPage';
 
 function App() {
   return (
@@ -52,6 +56,9 @@ function App() {
               <Route path="/search" element={<SearchResults />} />
               <Route path="/galleries" element={<PublicGalleriesPage />} /> {/* Added public galleries route */}
               <Route path="/videos" element={<PublicVideosPage />} /> {/* Added public videos route */}
+              <Route path='/about' element={<AboutPage></AboutPage>}></Route>
+              <Route path='/terms' element={<Terms></Terms>}></Route>
+              <Route path='/privacy' element={<Privacy></Privacy>}></Route>
               
               {/* Admin Routes */}
               <Route path="/admin/dashboard" element={

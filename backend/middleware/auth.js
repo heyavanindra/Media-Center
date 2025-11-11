@@ -5,9 +5,12 @@ const User = require('../models/User');
 const auth = async (req, res, next) => {
   try {
     // Get token from header
+    
     const token = req.header('Authorization')?.replace('Bearer ', '');
+    console.log("token",token)
     
     if (!token) {
+      
       return res.status(401).json({ message: 'No authentication token, access denied' });
     }
 
@@ -31,6 +34,7 @@ const auth = async (req, res, next) => {
 
 // Middleware to check if user is admin
 const isAdmin = (req, res, next) => {
+    console.log("is Admin",req.User)
   if (req.user && req.user.role === 'admin') {
     next();
   } else {
