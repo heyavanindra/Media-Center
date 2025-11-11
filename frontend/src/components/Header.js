@@ -271,7 +271,20 @@ const Header = () => {
       
       <MainHeader>
         <LogoContainer>
-          <Logo to="/">Media Center</Logo>
+          <Logo to="/">
+            <img 
+              style={{
+                height: '60px',
+                width: 'auto',
+                maxWidth: '200px',
+                objectFit: 'contain',
+                display: 'block',
+                margin: '0 auto'
+              }} 
+              src='/Logo.999c52667747dcab0fb7.webp' 
+              alt="Kisan Satta Logo"
+            />
+          </Logo>
         </LogoContainer>
         
         <MobileMenuButton onClick={toggleMobileMenu}>
