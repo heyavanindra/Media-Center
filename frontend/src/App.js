@@ -16,6 +16,7 @@ import PublicGalleriesPage from './pages/PublicGalleriesPage'; // Added for publ
 import PublicVideosPage from './pages/PublicVideosPage'; 
 import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
+import ContactUs from "./pages/ContactUs";
 
 
 // Admin Pages
@@ -59,6 +60,7 @@ function App() {
               <Route path='/about' element={<AboutPage></AboutPage>}></Route>
               <Route path='/terms' element={<Terms></Terms>}></Route>
               <Route path='/privacy' element={<Privacy></Privacy>}></Route>
+              <Route path='/contact' element={<ContactUs></ContactUs>}></Route>
               
               {/* Admin Routes */}
               <Route path="/admin/dashboard" element={
