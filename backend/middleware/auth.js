@@ -7,7 +7,6 @@ const auth = async (req, res, next) => {
     // Get token from header
     
     const token = req.header('Authorization')?.replace('Bearer ', '');
-    console.log("token",token)
     
     if (!token) {
       

@@ -1,0 +1,23 @@
+version: '3'
+
+tasks:
+  dev:
+    desc: Run backend and frontend together
+    deps:
+      - task: backend
+      - task: frontend
+    run: always
+
+  backend:
+    desc: Run backend server
+    dir: backend
+    cmds:
+      - pnpm run dev
+    run: always
+
+  frontend:
+    desc: Run frontend app
+    dir: frontend
+    cmds:
+      - pnpm start
+    run: always

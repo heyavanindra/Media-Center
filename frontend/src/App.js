@@ -14,6 +14,7 @@ import Register from './pages/Register';
 import SearchResults from './pages/SearchResults';
 import PublicGalleriesPage from './pages/PublicGalleriesPage'; // Added for public galleries page
 import PublicVideosPage from './pages/PublicVideosPage'; 
+import ExplainsPage from './pages/ExplainsPage';
 import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
 import ContactUs from "./pages/ContactUs";
@@ -27,11 +28,15 @@ import AdminDocs from './admin/AdminDocs';
 import AdminArticlePage from './admin/pages/AdminArticlePage';
 import AdminGalleryPage from './admin/pages/AdminGalleryPage';
 import AdminVideoPage from './admin/pages/AdminVideoPage';
+import AdminShotPage from './admin/pages/AdminShotPage';
+import AdminYtVideoPage from './admin/pages/AdminYtVideoPage';
 
 // Admin List Pages
 import ArticlesList from './admin/pages/ArticlesList';
 import GalleriesList from './admin/pages/GalleriesList';
 import VideosList from './admin/pages/VideosList';
+import ShotsList from './admin/pages/ShotsList';
+import YtVideosList from './admin/pages/YtVideosList';
 
 // Components
 import ProtectedRoute from './components/ProtectedRoute';
@@ -57,6 +62,7 @@ function App() {
               <Route path="/search" element={<SearchResults />} />
               <Route path="/galleries" element={<PublicGalleriesPage />} /> {/* Added public galleries route */}
               <Route path="/videos" element={<PublicVideosPage />} /> {/* Added public videos route */}
+              <Route path="/explains" element={<ExplainsPage />} />
               <Route path='/about' element={<AboutPage></AboutPage>}></Route>
               <Route path='/terms' element={<Terms></Terms>}></Route>
               <Route path='/privacy' element={<Privacy></Privacy>}></Route>
@@ -117,6 +123,35 @@ function App() {
               <Route path="/admin/videos/edit/:id" element={
                 <ProtectedRoute>
                   <AdminVideoPage />
+                </ProtectedRoute>
+              } />
+              
+              {/* Admin Shots Routes */}
+              <Route path="/admin/shots" element={
+                <ProtectedRoute>
+                  <ShotsList />
+                </ProtectedRoute>
+              } />
+              <Route path="/admin/shots/new" element={
+                <ProtectedRoute>
+                  <AdminShotPage />
+                </ProtectedRoute>
+              } />
+              <Route path="/admin/shots/edit/:id" element={
+                <ProtectedRoute>
+                  <AdminShotPage />
+                </ProtectedRoute>
+              } />
+
+              {/* Admin YouTube Videos Routes */}
+              <Route path="/admin/ytvideos" element={
+                <ProtectedRoute>
+                  <YtVideosList />
+                </ProtectedRoute>
+              } />
+              <Route path="/admin/ytvideos/new" element={
+                <ProtectedRoute>
+                  <AdminYtVideoPage />
                 </ProtectedRoute>
               } />
               

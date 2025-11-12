@@ -69,4 +69,11 @@ export const searchContent = (query, params = {}) => {
   return API.get('/search', { params: { query, ...params } });
 };
 
+export const fetchShots = () => API.get('/shots');
+export const createShot = (shotData) => API.post('/shots', shotData);
+
+export const fetchYtVideos = () => API.get('/ytvideo');
+export const createYtVideo = (ytVideoData) => API.post('/ytvideo', ytVideoData);
+export const deleteYtVideo = (id) => API.delete(`/ytvideo/${id}`);
+
 export default API;

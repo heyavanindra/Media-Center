@@ -8,6 +8,8 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import ArticleIcon from '@mui/icons-material/Article';
 import PhotoLibraryIcon from '@mui/icons-material/PhotoLibrary';
 import VideoLibraryIcon from '@mui/icons-material/VideoLibrary';
+import MovieIcon from '@mui/icons-material/Movie';
+import YouTubeIcon from '@mui/icons-material/YouTube';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import LogoutIcon from '@mui/icons-material/Logout';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -262,6 +264,12 @@ const AdminLayout = ({ children }) => {
     if (path === '/admin/videos') return 'Videos Management';
     if (path.includes('/admin/videos/add')) return 'Add New Video';
     if (path.includes('/admin/videos/edit')) return 'Edit Video';
+    if (path === '/admin/shots') return 'Shots Management';
+    if (path.includes('/admin/shots/add')) return 'Add New Shot';
+    if (path.includes('/admin/shots/edit')) return 'Edit Shot';
+    if (path === '/admin/ytvideos') return 'YouTube Videos Management';
+    if (path.includes('/admin/ytvideos/new')) return 'Add New YouTube Video';
+    if (path.includes('/admin/ytvideos/edit')) return 'Edit YouTube Video';
     if (path === '/admin/docs') return 'Documentation & Resources';
     return 'Admin Panel';
   };
@@ -363,6 +371,26 @@ const AdminLayout = ({ children }) => {
               className={location.pathname.includes('/admin/videos') ? 'active' : ''}
             >
               <VideoLibraryIcon /> Videos
+            </NavLink>
+          </NavItem>
+          
+          <NavItem>
+            <NavLink 
+              to="/admin/shots" 
+              onClick={closeSidebarOnMobile}
+              className={location.pathname.includes('/admin/shots') ? 'active' : ''}
+            >
+              <MovieIcon /> Shots
+            </NavLink>
+          </NavItem>
+          
+          <NavItem>
+            <NavLink 
+              to="/admin/ytvideos" 
+              onClick={closeSidebarOnMobile}
+              className={location.pathname.includes('/admin/ytvideos') ? 'active' : ''}
+            >
+              <YouTubeIcon /> YouTube Videos
             </NavLink>
           </NavItem>
           

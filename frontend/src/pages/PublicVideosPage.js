@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
-import { fetchVideos } from '../utils/api'; // Changed from fetchGalleries
+import { fetchYtVideos } from '../utils/api';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { CircularProgress, Typography, Container, Grid, Box } from '@mui/material';
@@ -185,17 +184,14 @@ const PublicVideosPage = () => {
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const loadVideos = async () => {
       try {
         setLoading(true);
-        const response = await fetchVideos({ limit: 0 });
-        if (response && response.data && Array.isArray(response.data.videos)) {
-          setVideos(response.data.videos);
-        } else if (response && Array.isArray(response.data)) {
-            setVideos(response.data);
+        const response = await fetchYtVideos();
+        if (response && Array.isArray(response.data)) {
+          setVideos(response.data);
         } else {
           console.warn('Videos data not found in expected structure:', response ? response.data : 'No response data');
           setVideos([]); 
@@ -212,8 +208,10 @@ const PublicVideosPage = () => {
     loadVideos();
   }, []);
 
-  const handleVideoClick = (videoId) => {
-    navigate(`/video/${videoId}`);
+  const handleVideoClick = (youtubeUrl) => {
+    if (youtubeUrl) {
+      window.open(youtubeUrl, '_blank', 'noopener,noreferrer');
+    }
   };
 
   if (loading) {
@@ -266,7 +264,7 @@ const PublicVideosPage = () => {
               console.log('Video data:', video);
               return (
               <Grid item key={video._id} xs={12} sm={6} md={4} lg={3}>
-                <VideoItemCard onClick={() => handleVideoClick(video._id)}>
+                <VideoItemCard onClick={() => handleVideoClick(video.youtubeUrl)}>
                   <VideoThumbnailContainer>
                     {video.thumbnail ? (
                       <img src={video.thumbnail} alt={video.title} />

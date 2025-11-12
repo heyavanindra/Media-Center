@@ -11,6 +11,8 @@ const galleryRoutes = require("./routes/gallery.routes");
 const videoRoutes = require("./routes/video.routes");
 const uploadRoutes = require("./routes/upload.routes");
 const searchRoutes = require("./routes/search.routes");
+const shotsRoutes = require("./routes/shot.routes");
+const ytVideosRoute = require("./routes/ytVideos.routes");
 
 // Configure environment variables
 dotenv.config();
@@ -40,6 +42,8 @@ app.use("/api/galleries", galleryRoutes);
 app.use("/api/videos", videoRoutes);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/search", searchRoutes);
+app.use("/api/shots", shotsRoutes);
+app.use("/api/ytvideo",ytVideosRoute)
 
 // Base route for API health check
 app.get("/api", (req, res) => {

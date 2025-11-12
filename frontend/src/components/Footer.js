@@ -123,8 +123,6 @@ const Footer = () => {
       links: [
         { name: 'About Us', path: '/about' },
         { name: 'Contact Us', path: '/contact' },
-        { name: 'Advertise with Us', path: '/advertise' },
-        { name: 'Careers', path: '/careers' },
         { name: 'Terms of Use', path: '/terms' },
         { name: 'Privacy Policy', path: '/privacy' },
       ],
@@ -140,16 +138,7 @@ const Footer = () => {
         { name: 'Technology', path: '/category/technology' },
       ],
     },
-    {
-      title: 'Subscription',
-      links: [
-        { name: 'Digital Subscription', path: '/subscribe/digital' },
-        { name: 'Print Subscription', path: '/subscribe/print' },
-        { name: 'Mobile App', path: '/mobile-app' },
-        { name: 'ePaper', path: '/epaper' },
-        { name: 'Archives', path: '/archives' },
-      ],
-    },
+
     {
       title: 'Connect with Us',
       links: [
