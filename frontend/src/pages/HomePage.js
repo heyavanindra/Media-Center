@@ -7,6 +7,8 @@ import {
   fetchShots,
   fetchYtVideos,
   searchContent,
+  fetchTopPicks,
+  fetchPremiumArticles,
 } from "../utils/api";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -1238,48 +1240,6 @@ function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
-// Dummy data embedded due to directory creation issues
-const dummyPremiumArticles = [
-  {
-    _id: "prem1",
-    title:
-      "As U.S. pauses new visa interviews, why international students matter | Data",
-    author: "SAMBAVI PARTHASARATHY",
-    category: "Premium",
-    authorImage: null,
-  },
-  {
-    _id: "prem2",
-    title: "Has the environmental crisis in India exacerbated? | Explained",
-    author: "TIKENDER SINGH PANWAR",
-    category: "Premium",
-    authorImage: null,
-  },
-  {
-    _id: "prem3",
-    title: "The unsung heroes in RCB's rise to the summit",
-    author: "R. KAUSHIK",
-    category: "Premium",
-    authorImage: null,
-  },
-  {
-    _id: "prem4",
-    title:
-      "Circling back to Rajiv Gandhi's assassination, a traumatic moment in Madras' history",
-    author: "K.C. VIJAYA KUMAR",
-    category: "Premium",
-    authorImage: "https://via.placeholder.com/32/007bff/ffffff?Text=KC", // Placeholder author image (32x32)
-  },
-  {
-    _id: "prem5",
-    title:
-      "News Analysis: Modi likely to attend BRICS summit in Brazil; meet closely watched by U.S.",
-    author: "SUHASINI HAIDAR",
-    category: "Premium",
-    authorImage: "https://via.placeholder.com/32/d32f2f/ffffff?Text=SH", // Placeholder author image (32x32)
-  },
-];
-
 const shortsData = [
   {
     id: "s1",
@@ -1453,11 +1413,13 @@ const HomePage = () => {
         const shortsData = Array.isArray(shortsRes.data) ? shortsRes.data : [];
         setShorts(shortsData);
 
-        setTopPicksArticles(
-          articlesData
-            .filter((a) => a.tags?.includes("top pick") || a.isTopPick)
-            .slice(0, 5)
-        );
+        // Fetch top picks from dedicated endpoint
+        const topPicksRes = await fetchTopPicks();
+        const topPicksData = Array.isArray(topPicksRes.data?.articles) 
+          ? topPicksRes.data.articles.slice(0, 5) 
+          : [];
+        setTopPicksArticles(topPicksData);
+
         setGalleries(galleriesData.slice(0, 6));
 
         // Prepare data for the new three-column hero
@@ -1465,21 +1427,18 @@ const HomePage = () => {
           articlesData.find((a) => a.isFeaturedHero) || articlesData[0];
         setMainHeroArticle(mainArticle);
 
-        const premium = articlesData
-          .filter(
-            (a) =>
-              (a.category?.toLowerCase() === "premium" ||
-                a.tags?.includes("premium")) &&
-              a._id !== mainArticle?._id
-          )
-          .slice(0, 5);
-        setPremiumArticles(premium);
+        // Fetch premium articles from dedicated endpoint
+        const premiumRes = await fetchPremiumArticles();
+        const premiumData = Array.isArray(premiumRes.data?.articles) 
+          ? premiumRes.data.articles.filter(a => a._id !== mainArticle?._id).slice(0, 5)
+          : [];
+        setPremiumArticles(premiumData);
 
         const latestNews = articlesData
           .filter(
             (a) =>
               a._id !== mainArticle?._id &&
-              !premium.find((p) => p._id === a._id)
+              !premiumData.find((p) => p._id === a._id)
           )
           .slice(0, 6);
         setLatestNewsArticlesColumn(latestNews);
@@ -1914,12 +1873,12 @@ const HomePage = () => {
               <HeroColumn>
                 <ColumnTitle>Premium</ColumnTitle>
                 <SideArticleList>
-                  {dummyPremiumArticles.length > 0 ? (
-                    dummyPremiumArticles.slice(0, 5).map((article, index) => (
+                  {premiumArticles.length > 0 ? (
+                    premiumArticles.slice(0, 5).map((article, index) => (
                       <PremiumArticleItem key={article._id}>
                         <div className="content">
                           <Link
-                            to={`/article/${article._id}`}
+                            to={`/article/${article.slug}`}
                             className="title"
                           >
                             {article.title}
@@ -1933,13 +1892,6 @@ const HomePage = () => {
                             </p>
                           )}
                         </div>
-                        {article.authorImage && index < 3 && (
-                          <img
-                            src={article.authorImage}
-                            alt={article.author}
-                            className="author-image"
-                          />
-                        )}
                       </PremiumArticleItem>
                     ))
                   ) : (
@@ -2162,7 +2114,7 @@ const HomePage = () => {
             {/* Old Video Section has been removed and replaced by the new TopVideosContainer. */}
 
             {/* Top Picks Carousel Section */}
-            <TopPicksCarousel />
+            <TopPicksCarousel articles={topPicksArticles} />
 
             {/* Media Center Explains Section */}
             <ExplainsWrapper>

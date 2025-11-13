@@ -138,7 +138,6 @@ const Footer = () => {
         { name: 'Technology', path: '/category/technology' },
       ],
     },
-
     {
       title: 'Connect with Us',
       links: [

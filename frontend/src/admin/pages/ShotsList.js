@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import AdminLayout from '../components/AdminLayout';
-import { fetchShots } from '../../utils/api';
+import { fetchShots, deleteShot } from '../../utils/api';
 
 // Material UI components
 import { 
@@ -300,6 +300,7 @@ const ShotsList = () => {
   const [shots, setShots] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [deletingId, setDeletingId] = useState(null);
   
   const fetchShotsData = async () => {
     try {
@@ -321,14 +322,14 @@ const ShotsList = () => {
   const handleDeleteShot = async (id) => {
     if (window.confirm('Are you sure you want to delete this shot?')) {
       try {
-        // Note: You'll need to add a deleteShot API function if you want delete functionality
-        // For now, we'll just show an alert
-        alert('Delete functionality not yet implemented. Please add a deleteShot API function.');
-        // await api.deleteShot(id);
-        // fetchShotsData();
+        setDeletingId(id);
+        await deleteShot(id);
+        setShots((prev) => prev.filter((shot) => shot._id !== id));
       } catch (error) {
         console.error('Error deleting shot:', error);
         alert('Failed to delete shot. Please try again.');
+      } finally {
+        setDeletingId(null);
       }
     }
   };
@@ -415,8 +416,9 @@ const ShotsList = () => {
                       variant="contained"
                       startIcon={<DeleteIcon />}
                       fullWidth
+                      disabled={deletingId === shot._id}
                     >
-                      Delete
+                      {deletingId === shot._id ? 'Deleting...' : 'Delete'}
                     </DeleteButton>
                   </ActionButtons>
                 </ShotCard>

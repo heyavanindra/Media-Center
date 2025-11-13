@@ -22,6 +22,8 @@ API.interceptors.request.use((config) => {
 export const fetchArticles = (params) => API.get('/articles', { params });
 export const fetchArticleBySlug = (slug) => API.get(`/articles/${slug}`);
 export const fetchArticleById = (id) => API.get(`/articles/id/${id}`); // For admin fetching by ID
+export const fetchTopPicks = () => API.get('/articles/toppick');
+export const fetchPremiumArticles = () => API.get('/articles/premium');
 export const createArticle = (articleData) => API.post('/articles', articleData);
 export const updateArticle = (id, articleData) => API.put(`/articles/${id}`, articleData);
 export const deleteArticle = (id) => API.delete(`/articles/${id}`);
@@ -71,6 +73,7 @@ export const searchContent = (query, params = {}) => {
 
 export const fetchShots = () => API.get('/shots');
 export const createShot = (shotData) => API.post('/shots', shotData);
+export const deleteShot = (id) => API.delete(`/shots/${id}`);
 
 export const fetchYtVideos = () => API.get('/ytvideo');
 export const createYtVideo = (ytVideoData) => API.post('/ytvideo', ytVideoData);

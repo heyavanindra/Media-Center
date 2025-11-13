@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
 import styled from 'styled-components';
 import "slick-carousel/slick/slick.css";
@@ -142,45 +143,7 @@ const PickTitle = styled.h3`
   line-height: 1.3;
 `;
 
-const dummyData = [
-  {
-    id: 1,
-    image: 'https://picsum.photos/seed/neeraj/400/350', // Placeholder from picsum.photos
-    category: 'Visual Story',
-    title: 'Neeraj joins the 90m club!',
-    type: 'image-background'
-  },
-  {
-    id: 2,
-    category: 'Cricket',
-    title: 'Piyush Chawla announces retirement from all forms of cricket',
-    type: 'color-background',
-    bgColor: '#B71C1C' // Dark red from title
-  },
-  {
-    id: 3,
-    image: 'https://picsum.photos/seed/hills/400/350', // Placeholder from picsum.photos
-    category: 'Sponsored',
-    title: 'Skopos Vadayambath Hills: Gated Villa Plot Living in Kochi\'s Rising Suburb, Puthenkurish',
-    type: 'image-background'
-  },
-  {
-    id: 4,
-    image: 'https://picsum.photos/seed/elonMusk/400/350', // Placeholder from picsum.photos
-    category: 'Science',
-    title: 'In row with Trump, Musk says will end critical U.S. spaceship program',
-    type: 'image-background'
-  },
-  {
-    id: 5,
-    image: 'https://picsum.photos/seed/aiStory/400/350', // Placeholder from picsum.photos
-    category: 'Technology',
-    title: 'New Breakthrough in AI Development Announced Today',
-    type: 'image-background'
-  },
-];
-
-const TopPicksCarousel = () => {
+const TopPicksCarousel = ({ articles = [] }) => {
   const settings = {
     dots: true,
     infinite: true,
@@ -212,20 +175,43 @@ const TopPicksCarousel = () => {
     ]
   };
 
+  // Transform articles data for the carousel
+  const carouselItems = articles.map((article, index) => {
+    // Determine card type based on whether article has an image
+    const hasImage = article.image;
+    const type = hasImage ? 'image-background' : 'color-background';
+    
+    return {
+      id: article._id || index,
+      slug: article.slug,
+      image: article.image || null,
+      category: article.category || 'Article',
+      title: article.title,
+      type: type,
+      bgColor: type === 'color-background' ? '#B71C1C' : null
+    };
+  });
+
+  if (carouselItems.length === 0) {
+    return null; // Don't render if no articles
+  }
+
   return (
     <TopPicksContainer>
       <SectionTitle>Top Picks</SectionTitle>
       <CarouselWrapper>
         <Slider {...settings}>
-          {dummyData.map(pick => (
+          {carouselItems.map(pick => (
             <div key={pick.id}>
-              <PickCard type={pick.type} bgColor={pick.bgColor} className={pick.type === 'color-background' ? 'color-background' : ''}>
-                {pick.image && <img src={pick.image} alt={pick.title} />}
-                <CardContent type={pick.type}>
-                  <CategoryLabel>{pick.category}</CategoryLabel>
-                  <PickTitle isLarge={pick.type === 'color-background'}>{pick.title}</PickTitle>
-                </CardContent>
-              </PickCard>
+              <Link to={`/article/${pick.slug}`} style={{ textDecoration: 'none', display: 'block' }}>
+                <PickCard type={pick.type} bgColor={pick.bgColor} className={pick.type === 'color-background' ? 'color-background' : ''}>
+                  {pick.image && <img src={pick.image} alt={pick.title} />}
+                  <CardContent type={pick.type}>
+                    <CategoryLabel>{pick.category}</CategoryLabel>
+                    <PickTitle isLarge={pick.type === 'color-background'}>{pick.title}</PickTitle>
+                  </CardContent>
+                </PickCard>
+              </Link>
             </div>
           ))}
         </Slider>

@@ -5,6 +5,8 @@ const { auth, isAdmin } = require('../middleware/auth');
 
 // Public routes
 router.get('/', articleController.getAllArticles);
+router.get('/toppick', articleController.getTopPicks);
+router.get('/premium', articleController.getPremiumArticles);
 router.get('/:slug', articleController.getArticleBySlug);
 
 // Protected routes (admin only)
@@ -13,5 +15,4 @@ router.get('/id/:id', auth, isAdmin, articleController.getArticleById); // New r
 router.post('/', auth, isAdmin, articleController.createArticle);
 router.put('/:id', auth, isAdmin, articleController.updateArticle);
 router.delete('/:id', auth, isAdmin, articleController.deleteArticle);
-
 module.exports = router;

@@ -80,6 +80,37 @@ exports.getArticleBySlug = async (req, res) => {
   }
 };
 
+
+exports.getTopPicks = async (req,res) =>{
+  try {
+    const articles = await Article.find({
+      tags: "top pick"
+    })
+      .sort({ createdAt: -1 })
+      .select('-content'); // Exclude content for list view
+    
+    res.json({ articles });
+  }catch (err){
+    console.error('Get top picks error:', err);
+    res.status(500).json({ message: 'Server error fetching top picks' });
+  }
+}
+
+exports.getPremiumArticles = async (req,res) =>{
+  try {
+    const articles = await Article.find({
+      tags: "premium"
+    })
+      .sort({ createdAt: -1 })
+      .select('-content'); // Exclude content for list view
+    
+    res.json({ articles });
+  }catch (err){
+    console.error('Get premium articles error:', err);
+    res.status(500).json({ message: 'Server error fetching premium articles' });
+  }
+}
+
 // Create new article
 exports.createArticle = async (req, res) => {
   try {

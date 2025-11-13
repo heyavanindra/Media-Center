@@ -51,4 +51,19 @@ const createShot = async (req, res) => {
     }
 };
 
-module.exports = { getShots, createShot };
+const deleteShot = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const deleted = await Shorts.findByIdAndDelete(id);
+
+        if (!deleted) {
+            return res.status(404).json({ message: 'Shot not found' });
+        }
+
+        res.json({ message: 'Shot deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+module.exports = { getShots, createShot, deleteShot };
